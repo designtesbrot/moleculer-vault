@@ -1,0 +1,21 @@
+version: "2"
+
+services:
+  moleculer:
+    build: ./../
+    command: dev
+    volumes:
+      - ./../:/usr/src
+    ports:
+      - 3000:3000
+    depends_on:
+      - vault
+  vault:
+    image: vault
+    cap_add:
+      - IPC_LOCK
+    command: server -dev
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: pssst
+
+
