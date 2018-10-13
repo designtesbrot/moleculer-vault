@@ -1,0 +1,57 @@
+{
+  "name": "moleculer-vault",
+  "version": "0.0.0",
+  "description": "A vault mixin for the moleculer framework",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/designtesbrot/moleculer-vault"
+  },
+  "author": "caspar.bauer0@gmail.com",
+  "license": "MIT",
+  "scripts": {
+    "ci": "jest --watch",
+    "test": "jest --coverage",
+    "lint": "eslint --ext=.js src",
+    "deps": "yarn-check -u",
+    "postdeps": "yarn test",
+    "coverall": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "keywords": [
+    "vault",
+    "secrets",
+    "microservices",
+    "microservice",
+    "moleculer"
+  ],
+  "devDependencies": {
+    "coveralls": "3.0.2",
+    "eslint": "5.6.1",
+    "jest": "23.6.0",
+    "jest-cli": "23.6.0",
+    "moleculer": "0.13.3",
+    "nodemon": "1.18.4",
+    "yarn-check": "0.0.3"
+  },
+  "peerDependencies": {
+    "moleculer": ">= 0.13.0"
+  },
+  "dependencies": {
+  },
+  "engines": {
+    "node": ">= 6.x.x"
+  },
+  "typings": "./index.d.ts",
+  "jest": {
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "rootDir": "./src",
+    "roots": [
+      "../test"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/services/"
+    ]
+  }
+}
