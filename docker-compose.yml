@@ -3,6 +3,6 @@ version: "2"
 services:
   package:
     build: ./
-    entrypoint: tail -f /etc/hosts
+    command: ci
     volumes:
       - ./:/usr/src
