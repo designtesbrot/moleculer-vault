@@ -9,8 +9,8 @@ let broker = new ServiceBroker({
 });
 
 // Load services
-broker.loadService(path.join(__dirname,'vault.service.js'));
-broker.loadService(path.join(__dirname,'api.service.js'));
+broker.loadService(path.join(__dirname, "vault.service.js"));
+broker.loadService(path.join(__dirname, "api.service.js"));
 
 // Start server
 broker.start().then(() => broker.repl());
