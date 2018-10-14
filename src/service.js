@@ -1,26 +1,29 @@
 const Vault = require("node-vault");
-const {defaultTo, add, prop, equals} = require("ramda");
+const {defaultTo, add, prop, equals, mergeDeepRight} = require("ramda");
 const {VaultInitializationError} = require("./errors");
+const {throwVaultError} = require("./helpers");
 
+/**
+ * Service mixin to manage vault
+ *
+ * @name moleculer-vault
+ * @module Service
+ */
 module.exports = {
 	// Service name
 	name: "vault",
 
 	// Default settings
 	settings: {
-		// Which API Version of the Vault to use
+		/** @type {String} Which API Version of the Vault to use. */
 		apiVersion: "v1",
-		// Where to find the Vault
+		/** @type {String} Where to find the Vault. */
 		endpoint: "http://127.0.0.1:8200",
-		// Which token to use for authenticating against the Vault
+		/** @type {String?} Which token to use for authenticating against the Vault */
 		token: undefined,
-		// When starting, the service will connect to the Vault. When the Vault
-		// is not initialized, it will by default request the initialization
-		// status up to 5 times
+		/** @type {Number} When starting, the service will connect to the Vault. When the Vault is not initialized, it will by default request the initialization status up to 5 times */
 		waitForInitializationAttempts: 5,
-		// When starting, the service will connect to the Vault. When the Vault
-		// is not initialized, it will by wait for 1 second before requesting
-		// the initialization status again
+		/** @type {Number} When starting, the service will connect to the Vault. When the Vault is not initialized, it will by wait for 1 second before requesting the initialization status again*/
 		waitForInitializationInterval: 1000,
 	},
 
@@ -64,15 +67,137 @@ module.exports = {
 		},
 	},
 
+	/**
+	 * Interact with the Vault
+	 */
 	actions: {
 		/**
-		 * Returns the health of the Vault
+		 * Obtain the Vaults Health.
 		 *
-		 * @returns {Promise.<{initialized: boolean}>}
+		 * @actions
+		 *
+		 * @returns {Object} The Vaults Health Status.
 		 */
-		health() {
-			return this.vault.health();
+		health: {
+			params: {},
+			handler(ctx) {
+				return this.vault.health(ctx.params).catch(throwVaultError);
+			},
 		},
+		/**
+		 * Obtain all mounts of the Vault
+		 *
+		 * @actions
+		 *
+		 * @returns {Array<Object>}
+		 */
+		mounts: {
+			params: {},
+			handler(ctx) {
+				return this.vault.mounts(ctx.params).catch(throwVaultError);
+			},
+		},
+		/**
+		 * Mount a new secret store at a given path
+		 *
+		 * @actions
+		 *
+		 * @param {String} mount_point - Specifies the path where the secrets engine will be mounted.
+		 * @param {String} type - Specifies the type of the backend, such as "aws".
+		 * @param {String?} description - Specifies the human-friendly description of the mount.
+		 * @param {Object?} config - Specifies configuration options for this mount.
+		 * @param {Object?} options - Specifies mount type specific options that are passed to the backend.
+		 * @param {Boolean?} [local=false] - ENTERPRISE ONLY: Specifies if the secrets engine is a local mount only. Local mounts are not replicated nor (if a secondary) removed by replication.
+		 * @param {Boolean?} [seal_wrap=false] - ENTERPRISE ONLY: Enable seal wrapping for the mount.
+		 *
+		 * @returns {undefined}
+		 */
+		mount: {
+			params: {
+				mount_point: {type: "string"},
+				type: {type: "string"},
+				description: {type: "string", optional: true},
+				config: {
+					type: "object",
+					optional: true,
+					props: {
+						// The default lease duration, specified as a string duration
+						// like "5s" or "30m".
+						default_lease_ttl: {type: "string", optional: true},
+						// The maximum lease duration, specified as a string duration
+						// like "5s" or "30m".
+						max_lease_ttl: {type: "string", optional: true},
+						// Disable caching.
+						force_no_cache: {type: "boolean", optional: true},
+						// The name of the plugin in the plugin catalog to use.
+						plugin_name: {type: "string", optional: true},
+					},
+				},
+				options: {type: "object", optional: true},
+				local: {type: "boolean", optional: true},
+				seal_wrap: {type: "boolean", optional: true},
+
+			},
+			handler(ctx) {
+				return Promise.resolve(ctx.params).
+					then(defaultTo({})).
+					then(mergeDeepRight({
+						description: "",
+						config: {
+							default_lease_ttl: 0,
+							force_no_cache: false,
+							max_lease_ttl: 0,
+							plugin_name: "",
+						},
+						local: false,
+						options: {},
+						seal_wrap: false,
+					})).
+					then(params => this.vault.mount(params)).
+					catch(throwVaultError);
+			},
+		},
+		/**
+		 * Remount a mount to a different Path
+		 *
+		 * @actions
+		 *
+		 * @param {String} from - Specifies the previous mount point.
+		 * @param {String} to - Specifies the new destination mount point.
+		 *
+		 * @returns {undefined}
+		 */
+		remount: {
+			params: {
+				from: {type: "string"},
+				to: {type: "string"},
+			},
+			handler(ctx) {
+				return Promise.resolve(ctx.params).
+					then(defaultTo({})).
+					then(params => this.vault.remount(params)).
+					catch(throwVaultError);
+			},
+		},
+		/**
+		 * Unmount a mount from a path
+		 *
+		 * @actions
+		 *
+		 * @param {String} mount_point - Specifies the path where the secrets engine will be mounted.
+		 *
+		 * @returns {undefined}
+		 */
+		unmount: {
+			params: {
+				mount_point: {type: "string"},
+			},
+			handler(ctx) {
+				return Promise.resolve(ctx.params).
+					then(params => this.vault.unmount(params)).
+					catch(throwVaultError);
+			},
+		}
 	},
 
 	/**
@@ -90,4 +215,6 @@ module.exports = {
 			then(attempts => this.logger.info(
 				`Connected to vault after ${attempts} attempts`));
 	},
+
+	examples: [],
 };

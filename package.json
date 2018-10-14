@@ -1,6 +1,6 @@
 {
   "name": "moleculer-vault",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A vault mixin for the moleculer framework",
   "main": "index.js",
   "repository": {
@@ -17,7 +17,8 @@
     "lint": "yarn install && eslint --ext=.js src",
     "deps": "yarn install && yarn-check -u",
     "postdeps": "yarn test",
-    "coverall": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "coverall": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "docgen": "node ./node_modules/moleculer-docgen src/service.js"
   },
   "keywords": [
     "vault",
@@ -33,8 +34,10 @@
     "jest": "23.6.0",
     "jest-cli": "23.6.0",
     "moleculer": "^0.13.3",
+    "moleculer-docgen": "^0.2.1",
     "moleculer-repl": "^0.5.2",
     "moleculer-web": "^0.8.2",
+    "mustache": "^3.0.0",
     "nodemon": "1.18.4",
     "yarn-check": "0.0.3"
   },
