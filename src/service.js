@@ -197,7 +197,130 @@ module.exports = {
 					then(params => this.vault.unmount(params)).
 					catch(throwVaultError);
 			},
-		}
+		},
+		/**
+		 * Write data to a Vault Backend
+		 *
+		 * @actions
+		 *
+		 * @param {String} path - Specifies the path to write to
+		 * @param {Object} data - The data to write. Schema of this object
+		 *         depends on the backend that is mounted at the given path
+		 * @param {Object?} requestOptions - Additional request Options that
+		 *         are passed to the request-promise-native underneath
+		 *
+		 * @returns {Object} Schema depends on the backend that is mounted at
+		 *         the given path
+		 */
+		write: {
+			params: {
+				path: {type: "string"},
+				data: {type: "object"},
+				requestOptions: {type: "object", optional: true}
+			},
+			handler(ctx) {
+				return Promise.resolve(ctx.params).
+					then(({path, data, requestOptions}) => this.vault.write(path, data,
+						requestOptions)).
+					catch(throwVaultError);
+			},
+		},
+		/**
+		 * Write data from a Vault Backend
+		 *
+		 * @actions
+		 *
+		 * @param {String} path - Specifies which data to read
+		 * @param {Object?} requestOptions - Additional request Options that
+		 *         are passed to the request-promise-native underneath
+		 *
+		 * @returns {Object} Schema depends on the backend that is mounted at
+		 *         the given path
+		 */
+		read: {
+			params: {
+				path: {type: "string"},
+				requestOptions: {type: "object", optional: true}
+			},
+			handler(ctx) {
+				return Promise.resolve(ctx.params).
+					then(({path, requestOptions}) => this.vault.read(
+						path, requestOptions)).
+					catch(throwVaultError);
+			},
+		},
+		/**
+		 * List data from a Vault Backend
+		 *
+		 * @actions
+		 *
+		 * @param {String} path - Specifies which data to list
+		 * @param {Object?} requestOptions - Additional request Options that
+		 *         are passed to the request-promise-native underneath
+		 *
+		 * @returns {Object} Schema depends on the backend that is mounted at
+		 *         the given path
+		 */
+		list: {
+			params: {
+				path: {type: "string"},
+				requestOptions: {type: "object", optional: true}
+			},
+			handler(ctx) {
+				return Promise.resolve(ctx.params).
+					then(({path, requestOptions}) => this.vault.list(
+						path, requestOptions)).
+					catch(throwVaultError);
+			},
+		},
+		/**
+		 * Delete data from a Vault Backend
+		 *
+		 * @actions
+		 *
+		 * @param {String} path - Specifies which data to read
+		 * @param {Object?} requestOptions - Additional request Options that
+		 *         are passed to the request-promise-native underneath
+		 *
+		 * @returns {Object} Schema depends on the backend that is mounted at
+		 *         the given path
+		 */
+		delete: {
+			params: {
+				path: {type: "string"},
+				requestOptions: {type: "object", optional: true}
+			},
+			handler(ctx) {
+				return Promise.resolve(ctx.params).
+					then(({path, requestOptions}) => this.vault.delete(
+						path, requestOptions)).
+					catch(throwVaultError);
+			},
+		},
+		/**
+		 * Obtain help from a Vault Backend
+		 *
+		 * @actions
+		 *
+		 * @param {String} path - Specifies for what to obtain help
+		 * @param {Object?} requestOptions - Additional request Options that
+		 *         are passed to the request-promise-native underneath
+		 *
+		 * @returns {Object} Schema depends on the backend that is mounted at
+		 *         the given path
+		 */
+		help: {
+			params: {
+				path: {type: "string"},
+				requestOptions: {type: "object", optional: true}
+			},
+			handler(ctx) {
+				return Promise.resolve(ctx.params).
+					then(({path, requestOptions}) => this.vault.help(
+						path, requestOptions)).
+					catch(throwVaultError);
+			},
+		},
 	},
 
 	/**
