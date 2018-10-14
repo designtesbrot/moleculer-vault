@@ -6,6 +6,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/df5f0f2c69ec9361d793/maintainability)](https://codeclimate.com/github/designtesbrot/moleculer-vault/maintainability)
 [![Known Vulnerabilities](https://snyk.io/test/github/designtesbrot/moleculer-vault/badge.svg)](https://snyk.io/test/github/designtesbrot/moleculer-vault)
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3351a0953a3bfcf7b64a)
+[![npm version](https://badge.fury.io/js/moleculer-vault.svg)](https://badge.fury.io/js/moleculer-vault)
 
 # Vault Service for the Moleculer framework
 
@@ -21,12 +22,12 @@ The following List details which features are implemented
 - Connect to the Vault on startup
 - Obtain the health status of the Vault
 - Mount Management
+- Write, Read and Delete Secrets from the Vault
 
 ## Roadmap
 
 The following List details which features will potentially be implemented
 
-- Write, Read and Delete Secrets from the Vault
 - Seal and Unseal the Vault
 - Audit Management
 - Auth Management
@@ -34,13 +35,11 @@ The following List details which features will potentially be implemented
 
 ## Install
 
-This package is not yet published to the npm-registry. In order to use it anyways, you can directly install it from github:
+This package is available in the npm-registry. In order to use it simply install it with yarn (or npm):
 
 ```bash
 yarn add moleculer-vault
 ```
-
-Once the package includes substantial API Coverage, it will be published to the npm-registry
 
 ## Usage
 
@@ -158,9 +157,9 @@ Remount a mount to a different Path
 | `to` | `String` | **required** | Specifies the new destination mount point. |
 
 ### Results
-**Type:** `Object`
+**Type:** `undefined`
 
-TODO
+
 
 
 ## `unmount` 
@@ -173,9 +172,101 @@ Unmount a mount from a path
 | `mount_point` | `String` | **required** | Specifies the path where the secrets engine will be mounted. |
 
 ### Results
+**Type:** `undefined`
+
+
+
+
+## `write` 
+
+Write data to a Vault Backend
+
+### Parameters
+| Property | Type | Default | Description |
+| -------- | ---- | ------- | ----------- |
+| `path` | `String` | **required** | Specifies the path to write to |
+| `data` | `Object` | **required** | The data to write. Schema of this object
+        depends on the backend that is mounted at the given path |
+| `requestOptions` | `Object` | - | Additional request Options that
+        are passed to the request-promise-native underneath |
+
+### Results
 **Type:** `Object`
 
-TODO
+Schema depends on the backend that is mounted at
+        the given path
+
+
+## `read` 
+
+Write data from a Vault Backend
+
+### Parameters
+| Property | Type | Default | Description |
+| -------- | ---- | ------- | ----------- |
+| `path` | `String` | **required** | Specifies which data to read |
+| `requestOptions` | `Object` | - | Additional request Options that
+        are passed to the request-promise-native underneath |
+
+### Results
+**Type:** `Object`
+
+Schema depends on the backend that is mounted at
+        the given path
+
+
+## `list` 
+
+List data from a Vault Backend
+
+### Parameters
+| Property | Type | Default | Description |
+| -------- | ---- | ------- | ----------- |
+| `path` | `String` | **required** | Specifies which data to list |
+| `requestOptions` | `Object` | - | Additional request Options that
+        are passed to the request-promise-native underneath |
+
+### Results
+**Type:** `Object`
+
+Schema depends on the backend that is mounted at
+        the given path
+
+
+## `delete` 
+
+Delete data from a Vault Backend
+
+### Parameters
+| Property | Type | Default | Description |
+| -------- | ---- | ------- | ----------- |
+| `path` | `String` | **required** | Specifies which data to read |
+| `requestOptions` | `Object` | - | Additional request Options that
+        are passed to the request-promise-native underneath |
+
+### Results
+**Type:** `Object`
+
+Schema depends on the backend that is mounted at
+        the given path
+
+
+## `help` 
+
+Obtain help from a Vault Backend
+
+### Parameters
+| Property | Type | Default | Description |
+| -------- | ---- | ------- | ----------- |
+| `path` | `String` | **required** | Specifies for what to obtain help |
+| `requestOptions` | `Object` | - | Additional request Options that
+        are passed to the request-promise-native underneath |
+
+### Results
+**Type:** `Object`
+
+Schema depends on the backend that is mounted at
+        the given path
 
 
 <!-- AUTO-CONTENT-END:ACTIONS -->
