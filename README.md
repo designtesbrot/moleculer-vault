@@ -1,4 +1,5 @@
 [![Moleculer logo](http://moleculer.services/images/banner.png)](https://github.com/moleculerjs/moleculer)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdesigntesbrot%2Fmoleculer-vault.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdesigntesbrot%2Fmoleculer-vault?ref=badge_shield)
 
 [![Build Status](https://travis-ci.com/designtesbrot/moleculer-vault.svg?branch=master)](https://travis-ci.com/designtesbrot/moleculer-vault)
 [![Coverage Status](https://coveralls.io/repos/github/designtesbrot/moleculer-vault/badge.svg?branch=master)](https://coveralls.io/github/designtesbrot/moleculer-vault?branch=master)
@@ -320,3 +321,6 @@ $ docker-compose up
 
 ## License
 moleculer-vault is available under the [MIT license](https://tldrlegal.com/license/mit-license).
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdesigntesbrot%2Fmoleculer-vault.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdesigntesbrot%2Fmoleculer-vault?ref=badge_large)
