@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "node-vault": "^0.9.0",
-    "ramda": "^0.25.0",
+    "ramda": "^0.27.2",
     "ramda-adjunct": "^2.10.0",
     "snyk": "^1.189.0"
   },
