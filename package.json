@@ -19,8 +19,8 @@
     "postdeps": "yarn test",
     "coverall": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "docgen": "node ./node_modules/moleculer-docgen src/service.js",
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "snyk-protect": "snyk-protect",
+    "prepublish": "yarn run snyk-protect"
   },
   "keywords": [
     "vault",
@@ -48,9 +48,9 @@
   },
   "dependencies": {
     "node-vault": "^0.9.0",
-    "ramda": "^0.25.0",
+    "ramda": "^0.27.2",
     "ramda-adjunct": "^2.10.0",
-    "snyk": "^1.189.0"
+    "@snyk/protect": "latest"
   },
   "engines": {
     "node": ">= 6.x.x"
