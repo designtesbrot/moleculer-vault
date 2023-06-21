@@ -50,7 +50,7 @@
     "node-vault": "^0.9.0",
     "ramda": "^0.25.0",
     "ramda-adjunct": "^2.10.0",
-    "snyk": "^1.189.0"
+    "snyk": "^1.685.0"
   },
   "engines": {
     "node": ">= 6.x.x"
